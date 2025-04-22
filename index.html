@@ -1472,6 +1472,8 @@
         </div>
     </section> -->
 
+
+
     <!-- What We Do Section -->
     <section id="what-we-do" class="py-20 bg-light">
         <div class="container mx-auto px-4">
@@ -2821,12 +2823,30 @@
         </div>
     </footer>
 
-    <!-- Back to top button -->
+    <!-- Back to top button with scroll progress -->
     <button id="back-to-top"
-        class="fixed bottom-6 right-6 bg-primary text-dark w-12 h-12 rounded-full flex items-center justify-center shadow-lg transform transition-transform duration-300 opacity-0 translate-y-10">
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7" />
+        class="fixed bottom-6 right-6 bg-light/80 backdrop-blur-sm border border-primary/20 text-dark w-14 h-14 rounded-full flex items-center justify-center shadow-lg transform transition-all duration-300 opacity-0 translate-y-10 overflow-hidden group">
+        <!-- Progress Circle -->
+        <svg class="absolute inset-0 w-full h-full -rotate-90 transition-transform group-hover:scale-105"
+            viewBox="0 0 100 100">
+            <circle class="text-secondary/10" stroke-width="4" stroke="currentColor" fill="transparent" r="44" cx="50"
+                cy="50" />
+            <circle id="scroll-progress-circle" class="text-primary transition-all" stroke-width="4"
+                stroke="currentColor" fill="transparent" r="44" cx="50" cy="50" stroke-dasharray="276.5"
+                stroke-dashoffset="276.5" />
         </svg>
+
+        <!-- Arrow Icon with Animation -->
+        <div class="relative z-10 transition-transform group-hover:-translate-y-1 duration-300">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-dark" fill="none" viewBox="0 0 24 24"
+                stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7" />
+            </svg>
+        </div>
+
+        <!-- Hover Effect -->
+        <span
+            class="absolute inset-0 bg-primary transform scale-0 rounded-full transition-transform duration-300 group-hover:scale-100 opacity-0 group-hover:opacity-100"></span>
     </button>
 
     <!-- AOS Animation Library -->

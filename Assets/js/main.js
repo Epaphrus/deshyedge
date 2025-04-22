@@ -163,19 +163,96 @@
         });
     }
 
-    /**
-     * Initialize back to top button functionality
-     */
-    function initBackToTop() {
-        if (!DOM.backToTopBtn) return;
+    // Enhanced Back to Top Button with Scroll Progress
+    function enhanceBackToTopButton() {
+        const backToTopButton = document.getElementById('back-to-top');
+        const progressCircle = document.getElementById('scroll-progress-circle');
 
-        DOM.backToTopBtn.addEventListener('click', () => {
-            window.scrollTo({
-                top: 0,
-                behavior: 'smooth'
-            });
+        if (!backToTopButton || !progressCircle) return;
+
+        // Calculate document height
+        const getDocHeight = () => {
+            const body = document.body;
+            const html = document.documentElement;
+
+            return Math.max(
+                body.scrollHeight, body.offsetHeight,
+                html.clientHeight, html.scrollHeight, html.offsetHeight
+            );
+        };
+
+        // Update button visibility and progress
+        window.addEventListener('scroll', () => {
+            const scrollTop = window.pageYOffset;
+            const docHeight = getDocHeight();
+            const winHeight = window.innerHeight;
+            const scrollPercent = scrollTop / (docHeight - winHeight);
+            const scrollPercentRounded = Math.round(scrollPercent * 100);
+
+            // Update circle progress
+            const circumference = 2 * Math.PI * 44; // 2πr where r=44
+            const offset = circumference - (scrollPercent * circumference);
+            if (progressCircle) {
+                progressCircle.style.strokeDashoffset = offset;
+            }
+
+            // Show/hide button with enhanced animation
+            if (scrollTop > 300) {
+                backToTopButton.classList.remove('opacity-0', 'translate-y-10');
+                backToTopButton.classList.add('opacity-100', 'translate-y-0');
+
+                // Add subtle floating animation when visible
+                backToTopButton.style.animation = 'float 3s ease-in-out infinite';
+            } else {
+                backToTopButton.classList.add('opacity-0', 'translate-y-10');
+                backToTopButton.classList.remove('opacity-100', 'translate-y-0');
+                backToTopButton.style.animation = 'none';
+            }
+
+            // Add elastic effect based on scroll velocity
+            if (Math.abs(window.lastScrollTop - scrollTop) > 50) {
+                backToTopButton.classList.add('scale-110');
+                setTimeout(() => {
+                    backToTopButton.classList.remove('scale-110');
+                }, 200);
+            }
+            window.lastScrollTop = scrollTop;
+        });
+
+        // Add CSS for floating animation
+        const style = document.createElement('style');
+        style.textContent = `
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-5px); }
+            100% { transform: translateY(0px); }
+        }
+    `;
+        document.head.appendChild(style);
+
+        // Smooth scroll with elastic effect
+        backToTopButton.addEventListener('click', () => {
+            // Add click animation
+            backToTopButton.classList.add('scale-90');
+            setTimeout(() => {
+                backToTopButton.classList.remove('scale-90');
+            }, 200);
+
+            // Smooth scroll with easing
+            const scrollToTop = () => {
+                const c = document.documentElement.scrollTop || document.body.scrollTop;
+                if (c > 0) {
+                    window.requestAnimationFrame(scrollToTop);
+                    // Implement custom easing for more natural feel
+                    window.scrollTo(0, c - c / 8);
+                }
+            };
+            scrollToTop();
         });
     }
+
+    // Initialize enhanced back to top button
+    document.addEventListener('DOMContentLoaded', enhanceBackToTopButton);
 
     /**
      * Initialize contact form submission and validation
@@ -308,7 +385,7 @@
         initContactForm();
         initServiceTabs(); // Add this line
     }
-  
+
     // Check if device supports AR for industries section
     const arCompatibilityCheck = () => {
         const industriesSection = document.getElementById('industries');
