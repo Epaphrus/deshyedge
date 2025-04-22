@@ -291,38 +291,22 @@
         });
     }
 
-    /**
-     * Show a message after form submission
-     * @param {string} message - The message to display
-     * @param {string} type - The type of message ('success' or 'error')
-     */
-    function showFormMessage(message, type) {
-        // Remove any existing message
-        const existingMessage = DOM.contactForm.querySelector('.form-message');
-        if (existingMessage) {
-            existingMessage.remove();
+    // Check if device supports AR for industries section
+    const arCompatibilityCheck = () => {
+        const industriesSection = document.getElementById('industries');
+
+        if (industriesSection) {
+            // This will be handled by the ar-industries.js script
+            console.log('Industries section found, AR compatibility will be checked by ar-industries.js');
         }
+    };
 
-        // Create message element
-        const messageElement = document.createElement('div');
-        messageElement.className = `form-message p-4 rounded-lg mt-4 ${type === 'success' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'
-            }`;
-        messageElement.textContent = message;
-
-        // Add message to form
-        DOM.contactForm.appendChild(messageElement);
-
-        // Remove message after 5 seconds if it's a success message
-        if (type === 'success') {
-            setTimeout(() => {
-                messageElement.remove();
-            }, 5000);
-        }
-    }
+    // Run AR compatibility check after page load
+    window.addEventListener('load', arCompatibilityCheck);
 
     /**
-     * Initialize all functionality when DOM is fully loaded
-     */
+  * Initialize all functionality when DOM is fully loaded
+  */
     function init() {
         initAOS();
         handleScrollEvents();
@@ -338,64 +322,4 @@
     } else {
         init();
     }
-
-    // Tab functionality for What We Do section
-    function initServiceTabs() {
-        const tabButtons = document.querySelectorAll('.tab-btn');
-        const tabContents = document.querySelectorAll('.tab-content');
-
-        if (tabButtons.length === 0 || tabContents.length === 0) return;
-
-        tabButtons.forEach(button => {
-            button.addEventListener('click', () => {
-                // Remove active class from all buttons
-                tabButtons.forEach(btn => {
-                    btn.classList.remove('bg-primary', 'text-dark');
-                    btn.classList.add('bg-secondary/10', 'text-secondary');
-                });
-
-                // Add active class to clicked button
-                button.classList.remove('bg-secondary/10', 'text-secondary');
-                button.classList.add('bg-primary', 'text-dark');
-
-                // Hide all tab contents
-                tabContents.forEach(content => {
-                    content.classList.add('hidden');
-                    content.classList.remove('active');
-                });
-
-                // Show corresponding tab content
-                const contentId = 'content-' + button.id.split('-')[1];
-                const activeContent = document.getElementById(contentId);
-                if (activeContent) {
-                    activeContent.classList.remove('hidden');
-                    activeContent.classList.add('active');
-                }
-            });
-        });
-    }
-
-    // Add this to your init function
-    function init() {
-        initAOS();
-        handleScrollEvents();
-        initMobileMenu();
-        initSmoothScrolling();
-        initBackToTop();
-        initContactForm();
-        initServiceTabs(); // Add this line
-    }
-
-    // Check if device supports AR for industries section
-    const arCompatibilityCheck = () => {
-        const industriesSection = document.getElementById('industries');
-
-        if (industriesSection) {
-            // This will be handled by the ar-industries.js script
-            console.log('Industries section found, AR compatibility will be checked by ar-industries.js');
-        }
-    };
-
-    // Run AR compatibility check after page load
-    window.addEventListener('load', arCompatibilityCheck);
 })();
