@@ -290,7 +290,7 @@
             DOM.contactForm.reset();
         });
     }
-
+   
     // Check if device supports AR for industries section
     const arCompatibilityCheck = () => {
         const industriesSection = document.getElementById('industries');
@@ -304,16 +304,16 @@
     // Run AR compatibility check after page load
     window.addEventListener('load', arCompatibilityCheck);
 
-    /**
-  * Initialize all functionality when DOM is fully loaded
-  */
+       /**
+     * Initialize all functionality when DOM is fully loaded
+     */
     function init() {
         initAOS();
         handleScrollEvents();
         initMobileMenu();
         initSmoothScrolling();
         initBackToTop();
-        initContactForm();
+        // initContactForm();
     }
 
     // Run initialization when DOM is fully loaded
