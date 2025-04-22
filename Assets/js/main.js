@@ -308,4 +308,144 @@
         initContactForm();
         initServiceTabs(); // Add this line
     }
+
+    // Initialize AOS (Animate On Scroll)
+    AOS.init({
+        duration: 800,
+        easing: 'ease-in-out',
+        once: true,
+        mirror: false
+    });
+
+    // DOM Elements
+    const header = document.querySelector('header');
+    const mobileMenuBtn = document.querySelector('#mobile-menu-button');
+    const mobileMenu = document.querySelector('#mobile-menu');
+    const backToTopBtn = document.querySelector('#back-to-top');
+    const navLinks = document.querySelectorAll('a[href^="#"]');
+    const contactForm = document.querySelector('#contact-form');
+
+    // Handle Scroll Events
+    window.addEventListener('scroll', () => {
+        // Header scroll effect
+        if (window.scrollY > 50) {
+            header.classList.add('bg-light/95', 'shadow-md');
+            header.classList.remove('bg-light/90');
+        } else {
+            header.classList.remove('bg-light/95', 'shadow-md');
+            header.classList.add('bg-light/90');
+        }
+
+        // Active nav link based on scroll position
+        const scrollPosition = window.scrollY + 100;
+
+        document.querySelectorAll('section').forEach(section => {
+            if (section.offsetTop <= scrollPosition &&
+                (section.offsetTop + section.offsetHeight) > scrollPosition) {
+
+                const currentId = section.getAttribute('id');
+
+                navLinks.forEach(link => {
+                    link.classList.remove('text-primary');
+                    if (link.getAttribute('href') === `#${currentId}`) {
+                        link.classList.add('text-primary');
+                    }
+                });
+            }
+        });
+
+        // Back to top button visibility
+        if (window.pageYOffset > 300) {
+            backToTopBtn.classList.remove('opacity-0', 'translate-y-10');
+            backToTopBtn.classList.add('opacity-100', 'translate-y-0');
+        } else {
+            backToTopBtn.classList.add('opacity-0', 'translate-y-10');
+            backToTopBtn.classList.remove('opacity-100', 'translate-y-0');
+        }
+    });
+
+    // Mobile Menu Toggle
+    if (mobileMenuBtn) {
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+    }
+
+    // Close mobile menu when clicking a nav link
+    navLinks.forEach(link => {
+        link.addEventListener('click', () => {
+            mobileMenu.classList.add('hidden');
+        });
+    });
+
+    // Back to top button functionality
+    if (backToTopBtn) {
+        backToTopBtn.addEventListener('click', function () {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+    }
+
+    // Contact Form Submission
+    if (contactForm) {
+        contactForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+
+            // Get form data
+            const formData = new FormData(contactForm);
+            const formValues = Object.fromEntries(formData.entries());
+
+            // Here you would typically send the data to a server
+            // For now, we'll just log it and show a success message
+            console.log('Form submitted with values:', formValues);
+
+            // Show success message
+            const successMessage = document.createElement('div');
+            successMessage.className = 'bg-green-100 text-green-800 p-4 rounded-lg mt-4';
+            successMessage.innerHTML = 'Thank you for your message! We will get back to you soon.';
+
+            contactForm.appendChild(successMessage);
+            contactForm.reset();
+
+            // Remove success message after 5 seconds
+            setTimeout(() => {
+                successMessage.remove();
+            }, 5000);
+        });
+    }
+
+    // Smooth scrolling for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+
+            const targetId = this.getAttribute('href');
+
+            if (targetId === '#') return;
+
+            const targetElement = document.querySelector(targetId);
+
+            if (targetElement) {
+                window.scrollTo({
+                    top: targetElement.offsetTop - 80, // Adjust for header height
+                    behavior: 'smooth'
+                });
+            }
+        });
+    });
+
+    // Check if device supports AR for industries section
+    const arCompatibilityCheck = () => {
+        const industriesSection = document.getElementById('industries');
+
+        if (industriesSection) {
+            // This will be handled by the ar-industries.js script
+            console.log('Industries section found, AR compatibility will be checked by ar-industries.js');
+        }
+    };
+
+    // Run AR compatibility check after page load
+    window.addEventListener('load', arCompatibilityCheck);
 })();
