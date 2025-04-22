@@ -1,13 +1,19 @@
-/* Base Styles */
 :root {
+    /* Colors */
     --primary: #FFD700;    /* Gold */
     --secondary: #4A4A4A;  /* Dark Gray */
     --dark: #1A1A1A;       /* Almost Black */
     --light: #FFFFFF;      /* White */
+    
+    /* Status Colors */
     --success: #28a745;    /* Green */
     --info: #17a2b8;       /* Teal */
     --warning: #ffc107;    /* Yellow */
     --danger: #dc3545;     /* Red */
+    
+    /* Spacing and Layout */
+    --header-height: 80px;
+    --section-padding: 4rem;
 }
 
 html {
@@ -139,5 +145,89 @@ body {
     .mobile-menu.open {
         transform: translateY(0);
         opacity: 1;
+    }
+}
+
+/* Additional Responsive Styles */
+
+/* Extra small devices (phones, 320px and up) */
+@media (min-width: 320px) {
+    .container {
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+    
+    h1 {
+        font-size: 2rem;
+    }
+    
+    h2 {
+        font-size: 1.75rem;
+    }
+}
+
+/* Small devices (landscape phones, 576px and up) */
+@media (min-width: 576px) {
+    h1 {
+        font-size: 2.5rem;
+    }
+    
+    h2 {
+        font-size: 2rem;
+    }
+}
+
+/* Medium devices (tablets, 768px and up) */
+@media (min-width: 768px) {
+    .container {
+        padding-left: 2rem;
+        padding-right: 2rem;
+    }
+    
+    h1 {
+        font-size: 3rem;
+    }
+    
+    h2 {
+        font-size: 2.25rem;
+    }
+}
+
+/* Large devices (desktops, 992px and up) */
+@media (min-width: 992px) {
+    h1 {
+        font-size: 3.5rem;
+    }
+    
+    h2 {
+        font-size: 2.5rem;
+    }
+}
+
+/* Extra large devices (large desktops, 1200px and up) */
+@media (min-width: 1200px) {
+    .container {
+        max-width: 1140px;
+        margin: 0 auto;
+    }
+}
+
+/* Fix for iPhone SE and other small devices */
+@media (max-width: 375px) {
+    .hero-buttons {
+        flex-direction: column;
+        gap: 1rem;
+    }
+    
+    .service-card {
+        padding: 1.25rem;
+    }
+    
+    .testimonial-card {
+        padding: 1.25rem;
+    }
+    
+    .contact-form-container {
+        padding: 1.25rem;
     }
 }
