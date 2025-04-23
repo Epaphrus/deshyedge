@@ -9,19 +9,6 @@
     'use strict';
 
     /**
-     * Initialize AOS (Animate On Scroll) library with optimal settings
-     */
-    function initAOS() {
-        AOS.init({
-            duration: 800,
-            easing: 'ease-in-out',
-            once: true,
-            mirror: false,
-            disable: 'mobile' // Disable on mobile for better performance
-        });
-    }
-
-    /**
      * Cache DOM elements for better performance
      * @type {Object}
      */
@@ -32,14 +19,33 @@
         backToTopBtn: document.getElementById('back-to-top'),
         navLinks: document.querySelectorAll('a[href^="#"]'),
         contactForm: document.getElementById('contact-form'),
-        sections: document.querySelectorAll('section[id]')
+        sections: document.querySelectorAll('section[id]'),
+        progressCircle: document.getElementById('scroll-progress-circle')
     };
+
+    /**
+     * Initialize AOS (Animate On Scroll) library with optimal settings
+     */
+    function initAOS() {
+        if (typeof AOS !== 'undefined') {
+            AOS.init({
+                duration: 800,
+                easing: 'ease-in-out',
+                once: true,
+                mirror: false,
+                disable: 'mobile' // Disable on mobile for better performance
+            });
+        }
+    }
 
     /**
      * Handle scroll events with throttling for performance
      */
     function handleScrollEvents() {
+        if (!DOM.header) return;
+        
         let ticking = false;
+        let lastScrollTop = 0;
 
         window.addEventListener('scroll', function () {
             if (!ticking) {
@@ -47,25 +53,41 @@
                     const scrollPosition = window.scrollY;
 
                     // Header scroll effect
-                    if (scrollPosition > 50) {
-                        DOM.header.classList.add('bg-light/95', 'shadow-md');
-                        DOM.header.classList.remove('bg-light/90');
-                    } else {
-                        DOM.header.classList.remove('bg-light/95', 'shadow-md');
-                        DOM.header.classList.add('bg-light/90');
+                    if (DOM.header) {
+                        if (scrollPosition > 50) {
+                            DOM.header.classList.add('bg-light/95', 'shadow-md');
+                            DOM.header.classList.remove('bg-light/90');
+                        } else {
+                            DOM.header.classList.remove('bg-light/95', 'shadow-md');
+                            DOM.header.classList.add('bg-light/90');
+                        }
                     }
 
                     // Back to top button visibility
-                    if (scrollPosition > 300) {
-                        DOM.backToTopBtn.classList.remove('opacity-0', 'translate-y-10');
-                        DOM.backToTopBtn.classList.add('opacity-100', 'translate-y-0');
-                    } else {
-                        DOM.backToTopBtn.classList.add('opacity-0', 'translate-y-10');
-                        DOM.backToTopBtn.classList.remove('opacity-100', 'translate-y-0');
+                    if (DOM.backToTopBtn) {
+                        if (scrollPosition > 300) {
+                            DOM.backToTopBtn.classList.remove('opacity-0', 'translate-y-10');
+                            DOM.backToTopBtn.classList.add('opacity-100', 'translate-y-0');
+                        } else {
+                            DOM.backToTopBtn.classList.add('opacity-0', 'translate-y-10');
+                            DOM.backToTopBtn.classList.remove('opacity-100', 'translate-y-0');
+                        }
                     }
 
                     // Update active navigation link based on scroll position
                     updateActiveNavLink(scrollPosition);
+
+                    // Update scroll progress
+                    updateScrollProgress(scrollPosition);
+
+                    // Add elastic effect based on scroll velocity
+                    if (DOM.backToTopBtn && Math.abs(lastScrollTop - scrollPosition) > 50) {
+                        DOM.backToTopBtn.classList.add('scale-110');
+                        setTimeout(() => {
+                            DOM.backToTopBtn.classList.remove('scale-110');
+                        }, 200);
+                    }
+                    lastScrollTop = scrollPosition;
 
                     ticking = false;
                 });
@@ -80,6 +102,8 @@
      * @param {number} scrollPosition - Current scroll position
      */
     function updateActiveNavLink(scrollPosition) {
+        if (!DOM.sections || !DOM.sections.length || !DOM.navLinks || !DOM.navLinks.length) return;
+        
         // Add offset for header height
         const scrollOffset = 100;
 
@@ -105,6 +129,30 @@
     }
 
     /**
+     * Update scroll progress indicator
+     * @param {number} scrollPosition - Current scroll position
+     */
+    function updateScrollProgress(scrollPosition) {
+        if (!DOM.progressCircle) return;
+
+        // Calculate document height
+        const body = document.body;
+        const html = document.documentElement;
+        const docHeight = Math.max(
+            body.scrollHeight, body.offsetHeight,
+            html.clientHeight, html.scrollHeight, html.offsetHeight
+        );
+        
+        const winHeight = window.innerHeight;
+        const scrollPercent = scrollPosition / (docHeight - winHeight);
+
+        // Update circle progress
+        const circumference = 2 * Math.PI * 44; // 2πr where r=44
+        const offset = circumference - (scrollPercent * circumference);
+        DOM.progressCircle.style.strokeDashoffset = offset;
+    }
+
+    /**
      * Initialize mobile menu functionality
      */
     function initMobileMenu() {
@@ -123,22 +171,26 @@
         });
 
         // Close mobile menu when clicking a nav link
-        DOM.navLinks.forEach(link => {
-            link.addEventListener('click', () => {
-                if (DOM.mobileMenu && !DOM.mobileMenu.classList.contains('hidden')) {
-                    DOM.mobileMenu.classList.add('hidden');
+        if (DOM.navLinks) {
+            DOM.navLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    if (DOM.mobileMenu && !DOM.mobileMenu.classList.contains('hidden')) {
+                        DOM.mobileMenu.classList.add('hidden');
 
-                    // Reset hamburger icon
-                    DOM.mobileMenuBtn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" /></svg>';
-                }
+                        // Reset hamburger icon
+                        DOM.mobileMenuBtn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" /></svg>';
+                    }
+                });
             });
-        });
+        }
     }
 
     /**
      * Initialize smooth scrolling for anchor links
      */
     function initSmoothScrolling() {
+        if (!DOM.navLinks) return;
+        
         DOM.navLinks.forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
@@ -163,79 +215,29 @@
         });
     }
 
-    // Enhanced Back to Top Button with Scroll Progress
-    function enhanceBackToTopButton() {
-        const backToTopButton = document.getElementById('back-to-top');
-        const progressCircle = document.getElementById('scroll-progress-circle');
-
-        if (!backToTopButton || !progressCircle) return;
-
-        // Calculate document height
-        const getDocHeight = () => {
-            const body = document.body;
-            const html = document.documentElement;
-
-            return Math.max(
-                body.scrollHeight, body.offsetHeight,
-                html.clientHeight, html.scrollHeight, html.offsetHeight
-            );
-        };
-
-        // Update button visibility and progress
-        window.addEventListener('scroll', () => {
-            const scrollTop = window.pageYOffset;
-            const docHeight = getDocHeight();
-            const winHeight = window.innerHeight;
-            const scrollPercent = scrollTop / (docHeight - winHeight);
-            const scrollPercentRounded = Math.round(scrollPercent * 100);
-
-            // Update circle progress
-            const circumference = 2 * Math.PI * 44; // 2πr where r=44
-            const offset = circumference - (scrollPercent * circumference);
-            if (progressCircle) {
-                progressCircle.style.strokeDashoffset = offset;
-            }
-
-            // Show/hide button with enhanced animation
-            if (scrollTop > 300) {
-                backToTopButton.classList.remove('opacity-0', 'translate-y-10');
-                backToTopButton.classList.add('opacity-100', 'translate-y-0');
-
-                // Add subtle floating animation when visible
-                backToTopButton.style.animation = 'float 3s ease-in-out infinite';
-            } else {
-                backToTopButton.classList.add('opacity-0', 'translate-y-10');
-                backToTopButton.classList.remove('opacity-100', 'translate-y-0');
-                backToTopButton.style.animation = 'none';
-            }
-
-            // Add elastic effect based on scroll velocity
-            if (Math.abs(window.lastScrollTop - scrollTop) > 50) {
-                backToTopButton.classList.add('scale-110');
-                setTimeout(() => {
-                    backToTopButton.classList.remove('scale-110');
-                }, 200);
-            }
-            window.lastScrollTop = scrollTop;
-        });
+    /**
+     * Initialize back to top button with scroll progress
+     */
+    function initBackToTop() {
+        if (!DOM.backToTopBtn) return;
 
         // Add CSS for floating animation
         const style = document.createElement('style');
         style.textContent = `
-        @keyframes float {
-            0% { transform: translateY(0px); }
-            50% { transform: translateY(-5px); }
-            100% { transform: translateY(0px); }
-        }
-    `;
+            @keyframes float {
+                0% { transform: translateY(0px); }
+                50% { transform: translateY(-5px); }
+                100% { transform: translateY(0px); }
+            }
+        `;
         document.head.appendChild(style);
 
         // Smooth scroll with elastic effect
-        backToTopButton.addEventListener('click', () => {
+        DOM.backToTopBtn.addEventListener('click', () => {
             // Add click animation
-            backToTopButton.classList.add('scale-90');
+            DOM.backToTopBtn.classList.add('scale-90');
             setTimeout(() => {
-                backToTopButton.classList.remove('scale-90');
+                DOM.backToTopBtn.classList.remove('scale-90');
             }, 200);
 
             // Smooth scroll with easing
@@ -251,8 +253,44 @@
         });
     }
 
-    // Initialize enhanced back to top button
-    document.addEventListener('DOMContentLoaded', enhanceBackToTopButton);
+    /**
+     * Show form message to user
+     * @param {string} message - Message to display
+     * @param {string} type - Message type (success/error)
+     */
+    function showFormMessage(message, type) {
+        const messageElement = document.getElementById('form-message');
+        
+        if (!messageElement) {
+            // Create message element if it doesn't exist
+            const newMessageElement = document.createElement('div');
+            newMessageElement.id = 'form-message';
+            newMessageElement.className = 'mt-4 p-3 rounded';
+            
+            if (DOM.contactForm) {
+                DOM.contactForm.after(newMessageElement);
+            }
+            
+            showFormMessage(message, type); // Call again now that element exists
+            return;
+        }
+        
+        // Set message content and styling
+        messageElement.textContent = message;
+        messageElement.className = 'mt-4 p-3 rounded';
+        
+        if (type === 'success') {
+            messageElement.classList.add('bg-green-100', 'text-green-800');
+        } else {
+            messageElement.classList.add('bg-red-100', 'text-red-800');
+        }
+        
+        // Auto-hide message after 5 seconds
+        setTimeout(() => {
+            messageElement.textContent = '';
+            messageElement.className = 'mt-4 hidden';
+        }, 5000);
+    }
 
     /**
      * Initialize contact form submission and validation
@@ -291,20 +329,19 @@
         });
     }
    
-    // Check if device supports AR for industries section
-    const arCompatibilityCheck = () => {
+    /**
+     * Check if device supports AR for industries section
+     */
+    function arCompatibilityCheck() {
         const industriesSection = document.getElementById('industries');
 
         if (industriesSection) {
             // This will be handled by the ar-industries.js script
             console.log('Industries section found, AR compatibility will be checked by ar-industries.js');
         }
-    };
+    }
 
-    // Run AR compatibility check after page load
-    window.addEventListener('load', arCompatibilityCheck);
-
-       /**
+    /**
      * Initialize all functionality when DOM is fully loaded
      */
     function init() {
@@ -313,7 +350,8 @@
         initMobileMenu();
         initSmoothScrolling();
         initBackToTop();
-        // initContactForm();
+        initContactForm();
+        arCompatibilityCheck();
     }
 
     // Run initialization when DOM is fully loaded
