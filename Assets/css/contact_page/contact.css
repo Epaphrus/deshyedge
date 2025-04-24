@@ -1,0 +1,121 @@
+/* DeshyEdge Consulting - Contact Page Styles */
+
+/* Glass panel styling */
+.glass-panel {
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 8px 32px rgba(31, 38, 135, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    transition: all 0.3s ease;
+}
+
+.glass-panel:hover {
+    box-shadow: 0 8px 32px rgba(31, 38, 135, 0.2);
+}
+
+/* Form transitions */
+#contact-form, #consultation-form {
+    transition: opacity 0.3s ease;
+}
+
+/* Tab styling */
+#general-inquiry-tab, #consultation-tab {
+    transition: all 0.3s ease;
+}
+
+/* FAQ accordion animations */
+.faq-toggle svg {
+    transition: transform 0.3s ease;
+}
+
+.faq-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+}
+
+.faq-content.open {
+    max-height: 500px;
+}
+
+/* Form validation styling */
+input:focus, select:focus, textarea:focus {
+    outline: none;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Form message animations */
+.form-message {
+    animation: slideIn 0.5s ease forwards;
+}
+
+@keyframes slideIn {
+    0% {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Consultant preview animations */
+#consultant-preview {
+    transition: all 0.3s ease;
+}
+
+#consultant-preview.hidden {
+    opacity: 0;
+    transform: translateY(10px);
+}
+
+#consultant-preview:not(.hidden) {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Map container styling */
+.aspect-w-16 {
+    position: relative;
+    padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
+}
+
+.aspect-w-16 > iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 0.5rem;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .grid-cols-1 {
+        grid-template-columns: 1fr;
+    }
+    
+    .lg\:col-span-2 {
+        grid-column: span 1;
+    }
+}
+
+/* Hover effects for buttons */
+button[type="submit"] {
+    transition: all 0.3s ease;
+}
+
+button[type="submit"]:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(79, 70, 229, 0.4);
+}
+
+/* Social media icons hover effects */
+.social-icon {
+    transition: all 0.3s ease;
+}
+
+.social-icon:hover {
+    transform: translateY(-3px);
+}

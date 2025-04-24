@@ -1,0 +1,180 @@
+/* Glass Morphism Navigation Styles */
+.glass-nav {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.3s ease;
+}
+
+.glass-nav.scrolled {
+  background: rgba(255, 255, 255, 0.85);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.05);
+}
+
+.nav-container {
+  position: relative;
+}
+
+/* Logo styling */
+.logo {
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.logo:hover {
+  text-shadow: 0 0 15px rgba(var(--primary-rgb), 0.5);
+}
+
+/* Navigation items */
+.nav-items {
+  display: flex;
+  align-items: center;
+}
+
+.nav-item {
+  position: relative;
+}
+
+.nav-link {
+  position: relative;
+  color: var(--text-dark);
+  font-weight: 500;
+  padding: 0.5rem 0;
+  transition: all 0.3s ease;
+}
+
+.nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background-color: var(--primary);
+  transition: width 0.3s ease;
+}
+
+.nav-link:hover {
+  color: var(--primary);
+}
+
+.nav-link:hover::after {
+  width: 100%;
+}
+
+.nav-link.active {
+  color: var(--primary);
+}
+
+.nav-link.active::after {
+  width: 100%;
+}
+
+/* CTA button */
+.nav-cta a {
+  background-color: var(--primary);
+  color: white;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(var(--primary-rgb), 0.2);
+}
+
+.nav-cta a:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(var(--primary-rgb), 0.3);
+}
+
+/* Progress indicator */
+.nav-progress-indicator {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+
+.nav-progress-indicator.visible {
+  opacity: 1;
+}
+
+.progress-circle {
+  transform: rotate(-90deg);
+}
+
+.progress-circle-bg {
+  stroke: rgba(var(--primary-rgb), 0.1);
+}
+
+.progress-circle-indicator {
+  stroke: var(--primary);
+  transition: stroke-dashoffset 0.3s ease;
+}
+
+/* Mobile menu toggle */
+.mobile-nav-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  transition: all 0.3s ease;
+}
+
+.mobile-nav-toggle:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+/* Mobile menu */
+.mobile-menu {
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.3s ease;
+}
+
+.nav-link-mobile {
+  display: block;
+  color: var(--text-dark);
+  font-weight: 500;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+.nav-link-mobile:hover, 
+.nav-link-mobile.active {
+  background: rgba(var(--primary-rgb), 0.1);
+  color: var(--primary);
+}
+
+/* Micro-interactions */
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
+
+.nav-item.suggested .nav-link {
+  animation: pulse 2s infinite;
+}
+
+/* Floating animation for CTA */
+@keyframes float {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-3px); }
+  100% { transform: translateY(0px); }
+}
+
+.nav-cta a {
+  animation: float 3s ease-in-out infinite;
+}
+
+/* Media queries */
+@media (max-width: 768px) {
+  .glass-nav {
+    background: rgba(255, 255, 255, 0.95);
+  }
+}
