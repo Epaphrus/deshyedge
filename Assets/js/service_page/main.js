@@ -10,8 +10,8 @@ document.addEventListener('DOMContentLoaded', function () {
     // Array of background images
     const backgroundImages = [
         '/Assets/Images/Photos/Trees.jpg',
-        '/Assets/Images/Photos/model-s.jpg',
-        '/Assets/Images/Photos/TeslaRed.avif'
+        '/Assets/Images/Photos/Bamboo.jpg',
+        '/Assets/Images/Photos/City.jpg'
     ];
 
     // Randomly select a background image
@@ -279,4 +279,113 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         });
     });
+});
+
+/**
+ * Testimonials Slider Functionality
+ * - Implements Swiper.js for the testimonial carousel
+ * - Handles navigation and pagination
+ */
+document.addEventListener('DOMContentLoaded', function() {
+    // Check if Swiper is loaded and the testimonial slider exists
+    if (typeof Swiper === 'undefined') {
+        // Load Swiper if it's not already loaded
+        const swiperScript = document.createElement('script');
+        swiperScript.src = 'https://unpkg.com/swiper@8/swiper-bundle.min.js';
+        swiperScript.onload = initTestimonialSlider;
+        document.head.appendChild(swiperScript);
+        
+        // Load Swiper CSS
+        const swiperStyle = document.createElement('link');
+        swiperStyle.rel = 'stylesheet';
+        swiperStyle.href = 'https://unpkg.com/swiper@8/swiper-bundle.min.css';
+        document.head.appendChild(swiperStyle);
+    } else {
+        // If Swiper is already loaded, initialize the slider
+        initTestimonialSlider();
+    }
+    
+    function initTestimonialSlider() {
+        // Check if the testimonial slider container exists
+        const testimonialSlider = document.querySelector('.testimonial-slider .swiper-container');
+        if (!testimonialSlider) return;
+        
+        // Initialize Swiper with simpler configuration to avoid fade issues
+        const swiper = new Swiper(testimonialSlider, {
+            // Basic parameters
+            slidesPerView: 1,
+            spaceBetween: 30,
+            loop: true,
+            autoplay: {
+                delay: 5000,
+                disableOnInteraction: false,
+            },
+            speed: 600,
+            
+            // Use slide effect instead of fade to ensure visibility
+            effect: 'slide',
+            
+            // Navigation buttons
+            navigation: {
+                nextEl: '.testimonial-next',
+                prevEl: '.testimonial-prev',
+            },
+            
+            // Pagination
+            pagination: {
+                el: '.testimonial-pagination',
+                clickable: true,
+                bulletClass: 'w-3 h-3 rounded-full bg-light/20 inline-block mx-1 transition-all duration-300',
+                bulletActiveClass: 'bg-primary w-6',
+                renderBullet: function(index, className) {
+                    return '<span class="' + className + '"></span>';
+                },
+            }
+        });
+        
+        // Add hover pause functionality
+        testimonialSlider.addEventListener('mouseenter', function() {
+            if (swiper.autoplay.running) {
+                swiper.autoplay.stop();
+            }
+        });
+        
+        testimonialSlider.addEventListener('mouseleave', function() {
+            if (!swiper.autoplay.running) {
+                swiper.autoplay.start();
+            }
+        });
+        
+        // Add accessibility features
+        const prevButton = document.querySelector('.testimonial-prev');
+        const nextButton = document.querySelector('.testimonial-next');
+        
+        if (prevButton) {
+            prevButton.setAttribute('aria-label', 'Previous testimonial');
+            prevButton.setAttribute('role', 'button');
+            prevButton.setAttribute('tabindex', '0');
+            
+            // Allow keyboard navigation
+            prevButton.addEventListener('keydown', function(e) {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    swiper.slidePrev();
+                }
+            });
+        }
+        
+        if (nextButton) {
+            nextButton.setAttribute('aria-label', 'Next testimonial');
+            nextButton.setAttribute('role', 'button');
+            nextButton.setAttribute('tabindex', '0');
+            
+            // Allow keyboard navigation
+            nextButton.addEventListener('keydown', function(e) {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    swiper.slideNext();
+                }
+            });
+        }
+    }
 });
