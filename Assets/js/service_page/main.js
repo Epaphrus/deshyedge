@@ -80,3 +80,64 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 });
+
+// Initialize AOS animation library
+document.addEventListener('DOMContentLoaded', function () {
+
+    // FAQ accordion functionality
+    const faqToggles = document.querySelectorAll('.faq-toggle');
+
+    faqToggles.forEach(toggle => {
+        toggle.addEventListener('click', function () {
+            const content = this.nextElementSibling;
+            const icon = this.querySelector('.faq-icon');
+
+            // Toggle content visibility
+            content.classList.toggle('hidden');
+
+            // Rotate icon
+            if (content.classList.contains('hidden')) {
+                icon.style.transform = 'rotate(0deg)';
+            } else {
+                icon.style.transform = 'rotate(180deg)';
+            }
+
+            // Close other FAQs
+            faqToggles.forEach(otherToggle => {
+                if (otherToggle !== toggle) {
+                    const otherContent = otherToggle.nextElementSibling;
+                    const otherIcon = otherToggle.querySelector('.faq-icon');
+
+                    otherContent.classList.add('hidden');
+                    otherIcon.style.transform = 'rotate(0deg)';
+                }
+            });
+        });
+    });
+
+    // Animate service cards on hover
+    const serviceCards = document.querySelectorAll('.service-card');
+    serviceCards.forEach(card => {
+        card.addEventListener('mouseenter', function () {
+            this.querySelector('.service-icon').classList.add('animate-bounce');
+        });
+
+        card.addEventListener('mouseleave', function () {
+            this.querySelector('.service-icon').classList.remove('animate-bounce');
+        });
+    });
+
+    // Lazy load images
+    if ('loading' in HTMLImageElement.prototype) {
+        // Browser supports native lazy loading
+        const images = document.querySelectorAll('img[loading="lazy"]');
+        images.forEach(img => {
+            img.src = img.dataset.src;
+        });
+    } else {
+        // Fallback for browsers that don't support lazy loading
+        const script = document.createElement('script');
+        script.src = 'https://cdnjs.cloudflare.com/ajax/libs/lazysizes/5.3.2/lazysizes.min.js';
+        document.body.appendChild(script);
+    }
+});
