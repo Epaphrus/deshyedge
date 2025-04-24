@@ -51,7 +51,7 @@
 
     <!-- CSS -->
     <!-- <link rel="stylesheet" href="/Assets/css/styles.css"> -->
-    <link rel="stylesheet" href="/Assets/css/services_page/styles.css">    
+    <link rel="stylesheet" href="/Assets/css/services_page/styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
     <!-- Favicon -->
@@ -220,8 +220,15 @@
     <main>
         <!-- Hero Section -->
         <section class="relative min-h-[90vh] flex items-center overflow-hidden" id="services-hero">
-            <!-- Background with subtle animation -->
-            <div class="absolute inset-0 bg-gradient-to-r from-dark/95 to-secondary/90 z-0">
+            <!-- Background image with overlay -->
+            <div class="absolute inset-0 z-0">
+                <!-- Background image -->
+                <img src="/Assets/Images/services-hero-bg.jp" alt="Services Background"
+                    class="absolute inset-0 w-full h-full object-cover object-center" />
+
+                <!-- Gradient overlay -->
+                <div class="absolute inset-0 bg-gradient-to-r from-dark/95 to-secondary/90 mix-blend-multiply"></div>
+
                 <!-- Animated background elements -->
                 <div class="absolute inset-0 overflow-hidden opacity-20">
                     <div class="absolute top-0 left-0 w-full h-full">
@@ -521,7 +528,7 @@
     <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
 
     <!-- Main JavaScript -->
-    <script src="Assets/js/main.js"></script>
+    <!-- <script src="Assets/js/main.js"></script> -->
 
     <!-- Service_page JavaScript -->
     <script src="Assets/js/service_page/main.js"></script>
