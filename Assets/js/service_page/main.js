@@ -1,11 +1,11 @@
 // Counter animation
 document.addEventListener('DOMContentLoaded', function () {
     // Initialize AOS
-    AOS.init({
-        duration: 800,
-        easing: 'ease-out',
-        once: true
-    });
+    // AOS.init({
+    //     duration: 800,
+    //     easing: 'ease-out',
+    //     once: true
+    // });
 
     // Array of background images
     const backgroundImages = [

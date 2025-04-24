@@ -43,7 +43,7 @@
      */
     function handleScrollEvents() {
         if (!DOM.header) return;
-        
+
         let ticking = false;
         let lastScrollTop = 0;
 
@@ -103,7 +103,7 @@
      */
     function updateActiveNavLink(scrollPosition) {
         if (!DOM.sections || !DOM.sections.length || !DOM.navLinks || !DOM.navLinks.length) return;
-        
+
         // Add offset for header height
         const scrollOffset = 100;
 
@@ -142,7 +142,7 @@
             body.scrollHeight, body.offsetHeight,
             html.clientHeight, html.scrollHeight, html.offsetHeight
         );
-        
+
         const winHeight = window.innerHeight;
         const scrollPercent = scrollPosition / (docHeight - winHeight);
 
@@ -190,7 +190,7 @@
      */
     function initSmoothScrolling() {
         if (!DOM.navLinks) return;
-        
+
         DOM.navLinks.forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
@@ -260,31 +260,31 @@
      */
     function showFormMessage(message, type) {
         const messageElement = document.getElementById('form-message');
-        
+
         if (!messageElement) {
             // Create message element if it doesn't exist
             const newMessageElement = document.createElement('div');
             newMessageElement.id = 'form-message';
             newMessageElement.className = 'mt-4 p-3 rounded';
-            
+
             if (DOM.contactForm) {
                 DOM.contactForm.after(newMessageElement);
             }
-            
+
             showFormMessage(message, type); // Call again now that element exists
             return;
         }
-        
+
         // Set message content and styling
         messageElement.textContent = message;
         messageElement.className = 'mt-4 p-3 rounded';
-        
+
         if (type === 'success') {
             messageElement.classList.add('bg-green-100', 'text-green-800');
         } else {
             messageElement.classList.add('bg-red-100', 'text-red-800');
         }
-        
+
         // Auto-hide message after 5 seconds
         setTimeout(() => {
             messageElement.textContent = '';
@@ -328,7 +328,7 @@
             DOM.contactForm.reset();
         });
     }
-   
+
     /**
      * Check if device supports AR for industries section
      */
