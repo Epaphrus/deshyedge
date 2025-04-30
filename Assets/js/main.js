@@ -284,18 +284,6 @@
     }
 
     /**
-     * Check if device supports AR for industries section
-     */
-    function arCompatibilityCheck() {
-        const industriesSection = document.getElementById('industries');
-
-        if (industriesSection) {
-            // This will be handled by the ar-industries.js script
-            console.log('Industries section found, AR compatibility will be checked by ar-industries.js');
-        }
-    }
-
-    /**
      * Handle page transitions and animations
      */
     function initPageTransitions() {
