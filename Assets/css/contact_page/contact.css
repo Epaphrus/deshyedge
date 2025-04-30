@@ -1,11 +1,71 @@
-/* Additional styles for contact page */
+/* Contact Hero Section with Background Image */
+.contact-hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+
+/* Background image handling */
+.contact-hero img {
+    object-position: center;
+    filter: brightness(0.7); /* Slightly darken the image for better text contrast */
+    transition: transform 10s ease; /* Slow zoom effect */
+}
+
+/* Optional: Subtle zoom effect on page load */
+.contact-hero:hover img {
+    transform: scale(1.05);
+}
+
+/* Enhance the glassmorphism effect for better readability over image */
+.contact-hero .backdrop-blur-md {
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+}
+
+/* Increase card opacity slightly for better readability */
+.contact-hero .bg-light\/10 {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.contact-hero .group:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+    transform: translateY(-5px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+}
+
+/* Ensure text remains readable over any background */
+.contact-hero h1, 
+.contact-hero p {
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+/* Enhance card content visibility */
+.contact-hero .group h3,
+.contact-hero .group p,
+.contact-hero .group a {
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+/* Animated grid pattern */
 .bg-grid-pattern {
     background-image: 
         linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
         linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
-    background-size: 20px 20px;
+    background-size: 30px 30px;
+    animation: gridMove 20s linear infinite;
 }
 
+@keyframes gridMove {
+    0% {
+        background-position: 0 0;
+    }
+    100% {
+        background-position: 30px 30px;
+    }
+}
+/* Additional styles for contact page */
 .btn-dark {
     display: inline-block;
     padding: 0.75rem 1.5rem;
