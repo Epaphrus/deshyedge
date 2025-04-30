@@ -16,7 +16,6 @@
         header: document.querySelector('header'),
         mobileMenuBtn: document.getElementById('mobile-menu-button'),
         mobileMenu: document.getElementById('mobile-menu'),
-        backToTopBtn: document.getElementById('back-to-top'),
         navLinks: document.querySelectorAll('a[href^="#"]'),
         contactForm: document.getElementById('contact-form'),
         sections: document.querySelectorAll('section[id]'),
@@ -63,33 +62,12 @@
                         }
                     }
 
-                    // Back to top button visibility
-                    if (DOM.backToTopBtn) {
-                        if (scrollPosition > 300) {
-                            DOM.backToTopBtn.classList.remove('opacity-0', 'translate-y-10');
-                            DOM.backToTopBtn.classList.add('opacity-100', 'translate-y-0');
-                        } else {
-                            DOM.backToTopBtn.classList.add('opacity-0', 'translate-y-10');
-                            DOM.backToTopBtn.classList.remove('opacity-100', 'translate-y-0');
-                        }
-                    }
-
                     // Update active navigation link based on scroll position
                     updateActiveNavLink(scrollPosition);
 
                     // Update scroll progress
                     updateScrollProgress(scrollPosition);
-
-                    // Add elastic effect based on scroll velocity
-                    if (DOM.backToTopBtn && Math.abs(lastScrollTop - scrollPosition) > 50) {
-                        DOM.backToTopBtn.classList.add('scale-110');
-                        setTimeout(() => {
-                            DOM.backToTopBtn.classList.remove('scale-110');
-                        }, 200);
-                    }
-                    lastScrollTop = scrollPosition;
-
-                    ticking = false;
+                  
                 });
 
                 ticking = true;
@@ -216,44 +194,6 @@
     }
 
     /**
-     * Initialize back to top button with scroll progress
-     */
-    function initBackToTop() {
-        if (!DOM.backToTopBtn) return;
-
-        // Add CSS for floating animation
-        const style = document.createElement('style');
-        style.textContent = `
-            @keyframes float {
-                0% { transform: translateY(0px); }
-                50% { transform: translateY(-5px); }
-                100% { transform: translateY(0px); }
-            }
-        `;
-        document.head.appendChild(style);
-
-        // Smooth scroll with elastic effect
-        DOM.backToTopBtn.addEventListener('click', () => {
-            // Add click animation
-            DOM.backToTopBtn.classList.add('scale-90');
-            setTimeout(() => {
-                DOM.backToTopBtn.classList.remove('scale-90');
-            }, 200);
-
-            // Smooth scroll with easing
-            const scrollToTop = () => {
-                const c = document.documentElement.scrollTop || document.body.scrollTop;
-                if (c > 0) {
-                    window.requestAnimationFrame(scrollToTop);
-                    // Implement custom easing for more natural feel
-                    window.scrollTo(0, c - c / 8);
-                }
-            };
-            scrollToTop();
-        });
-    }
-
-    /**
      * Show form message to user
      * @param {string} message - Message to display
      * @param {string} type - Message type (success/error)
@@ -349,7 +289,6 @@
         handleScrollEvents();
         initMobileMenu();
         initSmoothScrolling();
-        initBackToTop();
         initContactForm();
         arCompatibilityCheck();
     }
