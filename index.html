@@ -326,14 +326,77 @@
                 </div>
 
                 <div class="md:w-1/2 relative" data-aos="fade-left" data-aos-duration="1000" data-aos-delay="200">
-                    <!-- Main Image -->
+                    <!-- Carousel Container -->
                     <div class="relative z-10 rounded-2xl overflow-hidden shadow-2xl">
-                        <img src="./Assets/Images/Photos/meta.jpg" alt="DeshyEdge Digital Transformation"
-                            class="w-full h-auto object-cover">
+                        <!-- Carousel Slides -->
+                        <div class="carousel-container relative">
+                            <!-- Slide 1 -->
+                            <div class="carousel-slide fade">
+                                <img src="./Assets/Images/Photos/Laborday.jpg" alt="DeshyEdge Workshop Event"
+                                    class="w-full h-auto object-cover">
+                                <div
+                                    class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-dark/80 to-transparent p-6">
+                                    <h3 class="text-white text-xl font-bold">Happy Labor Day: May 1</h3>
+                                    <!-- <p class="text-white/80 text-sm mt-2">Strategic Digital Planning for SMEs</p> -->
+                                </div>
+                            </div>
+
+                            <!-- Slide 2 -->
+                            <div class="carousel-slide fade">
+                                <img src="./Assets/Images/Photos/meta.jpg" alt="DeshyEdge Digital Transformation"
+                                    class="w-full h-auto object-cover">
+                                <div
+                                    class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-dark/80 to-transparent p-6">
+                                    <h3 class="text-white text-xl font-bold">Digital Transformation Services</h3>
+                                    <p class="text-white/80 text-sm mt-2">Revolutionize your business with our
+                                        cutting-edge solutions</p>
+                                </div>
+                            </div>
+
+                            <!-- Slide 3 -->
+                            <div class="carousel-slide fade">
+                                <img src="./Assets/Images/Photos/Collaborative.png" alt="DeshyEdge Consulting Services"
+                                    class="w-full h-auto object-cover">
+                                <div
+                                    class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-dark/80 to-transparent p-6">
+                                    <h3 class="text-white text-xl font-bold">Expert Consulting Services</h3>
+                                    <p class="text-white/80 text-sm mt-2">Tailored solutions for your industry
+                                        challenges</p>
+                                </div>
+                            </div>
+
+                            <!-- Navigation Dots -->
+                            <div class="absolute bottom-20 left-0 right-0 flex justify-center space-x-2">
+                                <button
+                                    class="carousel-dot w-3 h-3 rounded-full bg-white/50 hover:bg-white transition-colors"></button>
+                                <button
+                                    class="carousel-dot w-3 h-3 rounded-full bg-white/50 hover:bg-white transition-colors"></button>
+                                <button
+                                    class="carousel-dot w-3 h-3 rounded-full bg-white/50 hover:bg-white transition-colors"></button>
+                            </div>
+
+                            <!-- Navigation Arrows -->
+                            <button
+                                class="carousel-prev absolute top-1/2 left-4 transform -translate-y-1/2 bg-dark/30 hover:bg-primary transition-colors text-white rounded-full p-2">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+                                    stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M15 19l-7-7 7-7" />
+                                </svg>
+                            </button>
+                            <button
+                                class="carousel-next absolute top-1/2 right-4 transform -translate-y-1/2 bg-dark/30 hover:bg-primary transition-colors text-white rounded-full p-2">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+                                    stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M9 5l7 7-7 7" />
+                                </svg>
+                            </button>
+                        </div>
                     </div>
 
-                    <!-- Decorative Elements -->
-                    <div
+                    <!-- Decorative Elements (Keeping the existing ones) -->
+                    <!-- <div
                         class="absolute top-1/2 -right-6 transform translate-y-1/2 bg-primary rounded-xl p-4 shadow-lg z-20 hidden md:block">
                         <div class="flex items-center gap-3">
                             <div class="bg-white rounded-full w-10 h-10 flex items-center justify-center">
@@ -348,9 +411,9 @@
                                 <div class="text-dark/70 text-xs">Cutting-edge solutions</div>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
 
-                    <div class="absolute -bottom-6 -left-6 bg-white rounded-xl p-4 shadow-lg z-20 hidden md:block">
+                    <!-- <div class="absolute -bottom-6 -left-6 bg-white rounded-xl p-4 shadow-lg z-20 hidden md:block">
                         <div class="flex items-center gap-3">
                             <div class="bg-primary/20 rounded-full w-10 h-10 flex items-center justify-center">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-primary" fill="none"
@@ -364,9 +427,9 @@
                                 <div class="text-secondary text-xs">Measurable results</div>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
 
-                    <!-- Background Decorative Element -->
+                    <!-- Background Decorative Element (Keeping the existing ones) -->
                     <div class="absolute -bottom-10 -right-10 w-40 h-40 bg-primary/20 rounded-full blur-2xl"></div>
                     <div class="absolute -top-10 -left-10 w-40 h-40 bg-secondary/10 rounded-full blur-2xl"></div>
                 </div>
@@ -1100,6 +1163,83 @@
 
     <!-- Services JavaScript -->
     <!-- <script src="/Assets/js/services.js"></script> -->
+
+    <!-- CAROUSEL JS -->
+    <script>
+        // Carousel functionality
+        document.addEventListener('DOMContentLoaded', function () {
+            let slideIndex = 0;
+            const slides = document.querySelectorAll('.carousel-slide');
+            const dots = document.querySelectorAll('.carousel-dot');
+            const prevBtn = document.querySelector('.carousel-prev');
+            const nextBtn = document.querySelector('.carousel-next');
+
+            // Hide all slides initially
+            function hideAllSlides() {
+                slides.forEach(slide => {
+                    slide.style.display = 'none';
+                });
+                dots.forEach(dot => {
+                    dot.classList.remove('bg-white');
+                    dot.classList.add('bg-white/50');
+                });
+            }
+
+            // Show current slide
+            function showSlide(n) {
+                hideAllSlides();
+                slideIndex = n;
+
+                if (slideIndex >= slides.length) {
+                    slideIndex = 0;
+                }
+                if (slideIndex < 0) {
+                    slideIndex = slides.length - 1;
+                }
+
+                slides[slideIndex].style.display = 'block';
+                dots[slideIndex].classList.remove('bg-white/50');
+                dots[slideIndex].classList.add('bg-white');
+            }
+
+            // Auto advance slides
+            function autoAdvance() {
+                showSlide(slideIndex + 1);
+            }
+
+            // Initialize carousel
+            showSlide(0);
+
+            // Set up event listeners for controls
+            if (prevBtn && nextBtn) {
+                prevBtn.addEventListener('click', () => showSlide(slideIndex - 1));
+                nextBtn.addEventListener('click', () => showSlide(slideIndex + 1));
+            }
+
+            // Set up dots
+            dots.forEach((dot, index) => {
+                dot.addEventListener('click', () => showSlide(index));
+            });
+
+            // Auto advance every 5 seconds
+            setInterval(autoAdvance, 5000);
+
+            // Add CSS for fade animation
+            const style = document.createElement('style');
+            style.innerHTML = `
+        .carousel-slide {
+            display: none;
+            animation: fade 0.5s ease-in-out;
+        }
+        
+        @keyframes fade {
+            from { opacity: 0.4 }
+            to { opacity: 1 }
+        }
+    `;
+            document.head.appendChild(style);
+        });
+    </script>
 </body>
 
 </html>
