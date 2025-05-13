@@ -68,7 +68,3 @@ Update the content in `index.html` to match your business needs.
 - Firefox (latest)
 - Safari (latest)
 - Edge (latest)
-
-## License
-
-MIT
